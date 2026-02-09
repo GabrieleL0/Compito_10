@@ -1,0 +1,139 @@
+#include <iostream>
+using namespace std;
+constexpr int MAX_PRODOTTI = 50;
+
+void CaricaMagazzino(string nomi[],int quantita[],int n) {
+    for(int i=0;i<n;i++) {
+        cout<<"Nome del prodotto "<<i<<": ";
+        cin>>nomi[i];
+        cout<<"Quantita' di "<<nomi[i]<<":";
+        cin>>quantita[i];
+    }
+}
+void VisualizzaStato(const string nomi[],const int quantita[],int n) {
+    cout<<"\n ---- Stato magazzino ---- \n";
+    for(int i=0;i<n;i++) {
+        cout<<nomi[i]<<": "<<quantita[i]<<" Pezzi \n";
+    }
+}
+int CalcoloTotale (const int quantita[],int n) {
+    int tot=0;
+    for(int i=0;i<n;i++) {
+        tot+=quantita[i];
+    }
+    return tot;
+}
+void ProdottoMinimo(const string nomi[], const int quantita[], int n) {
+    int minimo = quantita[0];
+
+    for (int i = 1; i < n; i++) {
+        if (quantita[i] < minimo) {
+            minimo = quantita[i];
+        }
+    }
+
+    cout << "Prodotti con quantita minima (" << minimo << "):\n";
+    for (int i = 0; i < n; i++) {
+        if (quantita[i] == minimo) {
+            cout << nomi[i] << endl;
+        }
+    }
+}
+void SottoScorta(const string nomi[],const int quantita[],int n,int soglia) {
+    cout<<"Prodotti sotto della soglia ("<<soglia<<"):\n";
+    for(int i=0;i<n;i++) {
+        if(quantita[i]<=soglia) {
+            cout<<nomi[i]<<":"<<quantita[i]<<" Pezzi\n";
+        }
+    }
+}
+double MediaPezzi (const int quantita[],int n) {
+    return static_cast <double> (CalcoloTotale(quantita,n))/n;
+}
+void VendiProdotti (int quantita[],int q,int indice) {
+    if (indice<0 || indice>=MAX_PRODOTTI) {
+        cout<<"Indice non valido \n";
+        return;
+    }
+    if(quantita[indice]>=q) {
+       quantita[indice] -= q;
+        cout<<"Vendita effettuata\n";
+    } else {
+        cout<<"Errore: quantita non disponibile \n";
+    }
+}
+void Rifornimento (int quantita[],int indice, int q) {
+    if (indice<0 || indice>q) {
+        cout<<"Indice non valido \n";
+        return;
+    }
+    quantita[indice] += q;
+    cout<<"Rifornimento effettuato\n";
+}
+int main() {
+    int n;
+    string nomi[MAX_PRODOTTI];
+    int quantita[MAX_PRODOTTI];
+    cout<<"Inserisci quanti prodotti (MAX 50): ";
+    cin>>n;
+    if (n<1 || n>MAX_PRODOTTI) {
+        cout<<"Valore non valido";
+        return 0;
+    }
+    CaricaMagazzino(nomi,quantita,n);
+    int scelta;
+    do {
+        cout<<"\n --- MENU --- \n 1. Visualliza Stato \n 2. Calcolo Totale \n 3. Prodotto Minimo \n 4. Prodotti Sotto La Soglia \n 5. Media Pezzi \n 6. Vendita Prodotti \n 7. Rifornimento \n 0. Esci \n Scegli: ";
+        cin>>scelta;
+        switch (scelta) {
+            case 1: {
+                VisualizzaStato(nomi,quantita,n);
+                break;
+            }
+                case 2: {
+                cout<<"Pezzi totali: "<<CalcoloTotale(quantita,n)<<endl;
+                break;
+            }
+                case 3: {
+                    ProdottoMinimo(nomi, quantita, n);
+                    break;
+                }
+                case 4: {
+                int soglia;
+                cout<<"Inserisci la soglia: ";
+                cin>>soglia;
+                SottoScorta(nomi,quantita,n,soglia);
+                break;
+            }
+                case 5: {
+                cout<<"Media pezzi: "<<MediaPezzi(quantita,n)<<endl;
+                break;
+            }
+                case 6: {
+                int indice ,q;
+                cout<<"Indice prodotto: ";
+                cin>>indice;
+                cout<<"Quantita da vendere: ";
+                cin>>q;
+                VendiProdotti(quantita,q,indice);
+                break;
+                }
+            case 7: {
+                int indice,q;
+                cout<<"Indice prodotto: ";
+                cin>>indice;
+                cout<<"Quantita da rifornire: ";
+                cin>>q;
+                Rifornimento(quantita,indice,q);
+                break;
+            }
+                case 0: {
+                cout<<"Uscita \n";
+                break;
+            }
+            default: cout<<"Errore";
+                break;
+        }
+    }while (scelta != 0);
+    return 0;
+}

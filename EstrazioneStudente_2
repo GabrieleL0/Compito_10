@@ -16,7 +16,7 @@ struct Studente {
 void pulisciInput();
 
 int main() {
-    srand(time(NULL));
+    srand(time(nullptr));
     Studente classe[NUM_STUDENTI] = {
         {1, "Acierno", "Vito", true},
         {2, "Alfano", "Andrea", true},
@@ -60,7 +60,7 @@ int main() {
         cout << " [0] Esci dal programma\n";
         cout << "=========================================\n";
         cout << "Seleziona un'opzione: ";
-        
+
         cin >> scelta;
 
         if (cin.fail()) {
@@ -168,6 +168,5 @@ int main() {
 void pulisciInput() {
     cin.clear();
     while (cin.get() != '\n') {
-        continue;
-    }
+           }
 }

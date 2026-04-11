@@ -4,6 +4,7 @@
 #include <ctime>
 
 using namespace std;
+constexpr int NUM_STUDENTI = 27;
 
 struct Studente {
     int numero;
@@ -16,9 +17,6 @@ void pulisciInput();
 
 int main() {
     srand(time(NULL));
-
-    const int NUM_STUDENTI = 27;
-    
     Studente classe[NUM_STUDENTI] = {
         {1, "Acierno", "Vito", true},
         {2, "Alfano", "Andrea", true},

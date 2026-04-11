@@ -21,7 +21,7 @@ int main() {
         {1, "Acierno", "Vito", true},
         {2, "Alfano", "Andrea", true},
         {3, "Attrotto", "Giovanni Pio", true},
-        {4, "Baroni", "Andrea", true},
+        {4, "Baroni", "Andrea", false},
         {5, "Belletti", "Davide", true},
         {6, "Cagnacci", "Dario", true},
         {7, "Chafqi", "Mohammed", true},

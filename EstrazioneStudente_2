@@ -1,172 +1,85 @@
-#include <iostream>
-#include <string>
-#include <cstdlib>
-#include <ctime>
+//classe
 
-using namespace std;
-constexpr int NUM_STUDENTI = 27;
+import java.util.Scanner;
 
-struct Studente {
-    int numero;
-    string cognome;
-    string nome;
-    bool presente;
-};
+public class Violenzometro {
+    public static Scanner scanner = new Scanner(System.in);
+    private int lvViolenza;
+    private int stageViolenza;
+    private String risposta;
+    private String[] domande = {"Ti ignora?", "Ti inganna?", "Ti sminuisce?", "Ti umilia?", "Ti controlla?", "Ti ricatta?", "Ti isola?", "Ti provoca sensi di colpa?", "Ti perseguita?", "Ti maltratta?", "Con lui non ti senti al sicuro?", "Ti colpisce/ferisce?", "Ti minaccia di morte?", "Ti minaccia con armi?", "Ti costringe ad avere rapporti sessuali?", "Pensi che potrebbe essere capace\n" + "di ucciderti o farsi del male?"};
 
-void pulisciInput();
+    public Violenzometro() {
+        this.lvViolenza = 0;
+        this.stageViolenza = 0;
+        this.risposta = "Il tuo partner non ti maltratta.";
+        this.domande = new String[]{"-"};
+    }
 
-int main() {
-    srand(time(nullptr));
-    Studente classe[NUM_STUDENTI] = {
-        {1, "Acierno", "Vito", true},
-        {2, "Alfano", "Andrea", true},
-        {3, "Attrotto", "Giovanni Pio", true},
-        {4, "Baroni", "Andrea", false},
-        {5, "Belletti", "Davide", true},
-        {6, "Cagnacci", "Dario", true},
-        {7, "Chafqi", "Mohammed", true},
-        {8, "Decataldo", "Samuele", true},
-        {9, "Di Donna", "Raffaele", true},
-        {10, "Dioguardi", "Gabriele", true},
-        {11, "El Jihad", "Imane", true},
-        {12, "Ezziymy", "Rayane", true},
-        {13, "Ferrari", "Luca", true},
-        {14, "Lotierzo", "Gabriele", true},
-        {15, "Martinelli", "Mattia", true},
-        {16, "Niscio", "Paolo", true},
-        {17, "Restino", "Marco", true},
-        {18, "Rima", "Lorenzo", true},
-        {19, "Siwek", "Kamil", true},
-        {20, "Tarasco", "Alessandro", true},
-        {21, "Tramontana", "Ernesto", true},
-        {22, "Turci", "Luca", true},
-        {23, "Ventura", "Federico", true},
-        {24, "Vicini", "Emilio Ruggero", true},
-        {25, "Vicini", "Lorenzo", true},
-        {26, "Wang", "Yi Nicky", true},
-        {27, "Zarra", "Matteo", true}
-    };
+    public Violenzometro(int lvViolenza, int stageViolenza, String risposta, String[] domande) {
+        this.lvViolenza = lvViolenza;
+        this.stageViolenza = stageViolenza;
+        this.risposta = risposta;
+        this.domande = domande;
+    }
 
-    int scelta = -1;
+    public int getLvViolenza() {
+        return lvViolenza;
+    }
 
-    do {
-        cout << "\n=========================================\n";
-        cout << "        GESTIONE ESTRAZIONI 3Bitt        \n";
-        cout << "=========================================\n";
-        cout << " [1] Visualizza registro completo\n";
-        cout << " [2] Elimina momentaneamente assenti\n";
-        cout << " [3] Visualizza registro presenti\n";
-        cout << " [4] Estrai studenti presenti\n";
-        cout << " [0] Esci dal programma\n";
-        cout << "=========================================\n";
-        cout << "Seleziona un'opzione: ";
+    public int getStageViolenza() {
+        return stageViolenza;
+    }
 
-        cin >> scelta;
+    public String getRisposta() {
+        return risposta;
+    }
 
-        if (cin.fail()) {
-            cout << "Errore: inserisci un numero valido!\n";
-            pulisciInput();
-            scelta = -1;
-            continue;
+    public String[] getDomande() {
+        return domande;
+    }
+
+    public void setLvViolenza(int lvViolenza) {
+        this.lvViolenza = lvViolenza;
+    }
+
+    public void setStageViolenza(int stageViolenza) {
+        this.stageViolenza = stageViolenza;
+    }
+
+    public void setRisposta(String risposta) {
+        this.risposta = risposta;
+    }
+
+    public void setDomande(String[] domande) {
+        this.domande = domande;
+    }
+
+    public void violenzaDetector() {
+        for (int i = 0; i < 16; i++) {
+            System.out.println("Domanda " + i + ": " + domande[i] + "\nScelta(Si/No): ");
+            risposta = scanner.nextLine().trim();
+            if (risposta.equals("si")) lvViolenza = i;
         }
+        if (lvViolenza == 0) System.out.println("Il tuo partner non è violento nei tuoi conrfonti.");
+        else if (lvViolenza <= 5 && lvViolenza >= 1) System.out.println("Chiama i tuoi familiari.");
+        else if (lvViolenza > 5 && lvViolenza <= 10) System.out.println("Vai ad un centro anti-violenza.");
+        else System.out.println("Chiama immediatamente la polizia.");
+    }
 
-        switch (scelta) {
-            case 1: {
-                cout << "\n--- REGISTRO COMPLETO 3Bitt ---\n";
-                for (int i = 0; i < NUM_STUDENTI; i++) {
-                    cout << classe[i].numero << ". " << classe[i].cognome << " " << classe[i].nome << "\n";
-                }
-                break;
-            }
-
-            case 2: {
-                int numAssente;
-                cout << "\nInserisci il numero di registro dello studente assente: ";
-                cin >> numAssente;
-
-                if (cin.fail() || numAssente < 1 || numAssente > NUM_STUDENTI) {
-                    cout << "Errore: numero di registro non valido! (Deve essere tra 1 e 27)\n";
-                    pulisciInput();
-                } else {
-                    if (!classe[numAssente - 1].presente) {
-                        cout << "Lo studente " << classe[numAssente - 1].cognome << " e' gia' stato segnato assente.\n";
-                    } else {
-                        classe[numAssente - 1].presente = false;
-                        cout << "Studente " << classe[numAssente - 1].cognome << " segnato come ASSENTE.\n";
-                    }
-                }
-                break;
-            }
-
-            case 3: {
-                cout << "\n--- STUDENTI ATTUALMENTE PRESENTI ---\n";
-                int conteggio = 0;
-                for (int i = 0; i < NUM_STUDENTI; i++) {
-                    if (classe[i].presente) {
-                        cout << classe[i].numero << ". " << classe[i].cognome << " " << classe[i].nome << "\n";
-                        conteggio++;
-                    }
-                }
-                cout << "Totale presenti: " << conteggio << "\n";
-                break;
-            }
-
-            case 4: {
-                int numDaEstrarre;
-                cout << "\nQuanti studenti vuoi estrarre? (da 1 a 10): ";
-                cin >> numDaEstrarre;
-
-                if (cin.fail() || numDaEstrarre < 1 || numDaEstrarre > 10) {
-                    cout << "Errore: puoi estrarre solo da 1 a 10 studenti!\n";
-                    pulisciInput();
-                    break;
-                }
-
-                int indiciPresenti[NUM_STUDENTI];
-                int numeroPresenti = 0;
-
-                for (int i = 0; i < NUM_STUDENTI; i++) {
-                    if (classe[i].presente) {
-                        indiciPresenti[numeroPresenti] = i;
-                        numeroPresenti++;
-                    }
-                }
-
-                if (numDaEstrarre > numeroPresenti) {
-                    cout << "Errore: ci sono solo " << numeroPresenti << " studenti presenti. Non posso estrarne " <<
-                            numDaEstrarre << "!\n";
-                    break;
-                }
-
-                cout << "\n--- STUDENTI ESTRATTI ---\n";
-                for (int i = 0; i < numDaEstrarre; i++) {
-                    int indiceCasuale = rand() % numeroPresenti;
-                    int idEstratto = indiciPresenti[indiceCasuale];
-
-                    cout << "> " << classe[idEstratto].numero << ". " << classe[idEstratto].cognome << " " << classe[
-                        idEstratto].nome << "\n";
-
-                    indiciPresenti[indiceCasuale] = indiciPresenti[numeroPresenti - 1];
-                    numeroPresenti--;
-                }
-                cout << "-------------------------\n";
-                break;
-            }
-
-            case 0:
-                cout << "Uscita dal programma. Arrivederci!\n";
-                break;
-
-            default:
-                cout << "Scelta non valida! Inserisci un numero del menu.\n";
-                break;
-        }
-    } while (scelta != 0);
-
-    return 0;
+    public void visualizza() {
+        System.out.println("----- VIOLENZAMETRO -----\n");
+        violenzaDetector();
+    }
 }
 
-void pulisciInput() {
-    cin.clear();
-    while (cin.get() != '\n');
+//main
+
+import java.util.Scanner;
+
+public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    Violenzometro v1 = new Violenzometro();
+    v1.visualizza();
+
 }

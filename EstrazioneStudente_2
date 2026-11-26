@@ -7,7 +7,7 @@ public class Violenzometro {
     private int lvViolenza;
     private int stageViolenza;
     private String risposta;
-    private String[] domande = {"Ti ignora?", "Ti inganna?", "Ti sminuisce?", "Ti umilia?", "Ti controlla?", "Ti ricatta?", "Ti isola?", "Ti provoca sensi di colpa?", "Ti perseguita?", "Ti maltratta?", "Con lui non ti senti al sicuro?", "Ti colpisce/ferisce?", "Ti minaccia di morte?", "Ti minaccia con armi?", "Ti costringe ad avere rapporti sessuali?", "Pensi che potrebbe essere capace\n" + "di ucciderti o farsi del male?"};
+    private String[] domande;
 
     public Violenzometro() {
         this.lvViolenza = 0;
@@ -20,7 +20,8 @@ public class Violenzometro {
         this.lvViolenza = lvViolenza;
         this.stageViolenza = stageViolenza;
         this.risposta = risposta;
-        this.domande = domande;
+        this.domande = new String[]{"Il tuo partner ti ignora?", "Il tuo partner ti inganna?", "Il tuo partner ti sminuisce?", "Il tuo partner ti umilia?", "Il tuo partner ti controlla?", "Il tuo partner ti ricatta?", "Il tuo partner ti isola?", "Il tuo partner ti provoca sensi di colpa?", "Il tuo partner ti perseguita?", "Il tuo partner ti maltratta?", "Con lui non ti senti al sicuro?", "Il tuo partner ti colpisce/ferisce?", "Il tuo partner ti minaccia di morte?", "Il tuo partner ti minaccia con armi?", "Il tuo partner ti costringe ad avere rapporti sessuali?", "Pensi che potrebbe essere capace\n" + "di ucciderti o farsi del male?"};
+
     }
 
     public int getLvViolenza() {
@@ -61,10 +62,13 @@ public class Violenzometro {
             risposta = scanner.nextLine().trim();
             if (risposta.equals("si")) lvViolenza = i;
         }
-        if (lvViolenza == 0) System.out.println("Il tuo partner non è violento nei tuoi conrfonti.");
-        else if (lvViolenza <= 5 && lvViolenza >= 1) System.out.println("Chiama i tuoi familiari.");
-        else if (lvViolenza > 5 && lvViolenza <= 10) System.out.println("Vai ad un centro anti-violenza.");
-        else System.out.println("Chiama immediatamente la polizia.");
+        if (lvViolenza == 0)
+            System.out.println("Risultato delle sue domande: Il tuo partner non è violento nei tuoi confronti.");
+        else if (lvViolenza <= 5 && lvViolenza >= 1)
+            System.out.println("Risultato delle sue domande: Chiama i tuoi familiari.");
+        else if (lvViolenza > 5 && lvViolenza <= 10)
+            System.out.println("Risultato delle sue domande: Vai ad un centro anti-violenza.");
+        else System.out.println("Risultato delle sue domande: Chiama immediatamente la polizia.");
     }
 
     public void visualizza() {
@@ -73,13 +77,19 @@ public class Violenzometro {
     }
 }
 
+
 //main
 
 import java.util.Scanner;
 
 public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-    Violenzometro v1 = new Violenzometro();
+    int lvViolenza = 0, stageViolenza = 0;
+    String risposta = "Il tuo partner non ti maltratta.";
+    String[] domande = new String[]{"-"};
+    Violenzometro v1 = new Violenzometro(lvViolenza,stageViolenza,risposta,domande);
+
     v1.visualizza();
 
 }
+
